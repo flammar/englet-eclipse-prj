@@ -1,0 +1,13 @@
+/*
+source("mappathtest.bsh");
+*/
+import net.sourceforge.yamlbeans.YamlReader;
+import am.englet.util.*;
+reader = new YamlReader(new FileReader("test.yml"));
+object = reader.read();
+print(object);
+print(new MapPath("/beans").get(object));
+print(new MapPath("/beans/win").get(object));
+print(new MapPath("/chk/www").get(object));
+print(new MapPath("/import").get(object));
+print(new MapPath("/import/1").get(object));

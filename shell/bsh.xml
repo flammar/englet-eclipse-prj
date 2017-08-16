@@ -1,0 +1,11 @@
+<project>
+
+    <target name="main">
+    	<echo message="${basedir}/bsh.bsh"/>
+       <java classname="bsh.Interpreter">
+       	<!-- classpath path="${basedir}/../bin"></classpath-->
+        <arg value="${basedir}/bsh.bsh"/>
+       </java>
+    </target>
+</project>
+

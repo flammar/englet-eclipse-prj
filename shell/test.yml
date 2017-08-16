@@ -1,0 +1,28 @@
+# keywords: import,include, beans, ?,ref,target,call
+import:
+ - frame: javax.swing.JFrame
+ - string: java.lang.String
+ - javax.swing.JTextArea
+beans:
+ win:
+  frame:
+   -:
+      - string: test frame header
+   size:
+    java.awt.Dimension:
+     -:
+       - int: 400
+       - int: 400
+   with:
+    - contentPane:
+       add:
+         JTextArea:
+          columns: 40
+          rows: 20
+    - contentPane:
+       add:
+         javax.swing.JButton: doooo!
+       
+implementations:
+ CharSequence: StringBuffer
+implementors: [StringBuffer, FileReader, URLInputStream]

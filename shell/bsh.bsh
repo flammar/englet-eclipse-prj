@@ -1,0 +1,20 @@
+import bsh.util.*;
+JConsole console = new JConsole();
+JFrame fr=new JFrame("Eclipse: BeanShell DeskTop root");
+fr.addWindowListener( new WindowAdapter(){
+	windowClosing( e ) {
+		bsh.system.desktop = null;
+		fr.dispose();
+		try{Thread.currentThread.interrupt();}
+		finally{}
+	}
+
+} );
+fr.getContentPane().add(console);
+Interpreter interpreter = new Interpreter( console );
+path=pathToFile( getSourceFileInfo() ).getParentFile().getAbsolutePath();
+interpreter.source(path+"//main.bsh");
+Thread t;
+(t=new Thread( interpreter )).start(); fr.show();
+t.join();
+

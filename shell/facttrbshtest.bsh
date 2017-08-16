@@ -1,0 +1,30 @@
+/*
+source("facttrbshtest.bsh");
+*/
+import am.englet.*;
+// o="{,?s a!?sA 0#d= 1 #d{A A?s 1#d-?s 1 int!?s!?s*}?s if;}fact! !i";
+//o="{, a!A 0#d= 1 #d{A A 1#d- 1 int!!*}if;}fact! !i";
+//o="{, a!A 0#d 1#d{ A 1#d- 1 int!!*}=if;}fact! !i";
+
+////o="{0#d 1#d{+1 1#d- 1 int!!*?s}=if}fact! !i";
+//"{0#d 1{+x 1- 1!!*}=if}"
+//o="{, x! 1X{, x!X 0#d {;} {*X; 1- 1! 1 ngo}=if}!;}"
+//o="{, x! 1X{, x!X 0#d {;} {times1X; 1- 1@r}=if}!;}"
+o="{, x param 1X{ x!X 0#d {} {times1X 1- 1@r}=if}!;}"
+    +"fact! !i";
+englet = new Englet();
+englet.parse("'am.englet.TestUtils0 !i adapt_processing_class !i");
+englet.parse("'am.englet.bsh.Management !i adapt_processing_class !i");
+englet.parse("'adaptbshtest.bsh !i adapt_bsh_script !i");
+//print(englet.getMethods());
+//print(englet.getRstack());
+print(englet.getStack());
+englet.parse(o);
+print(englet.getStack());
+o1="{1000#d Fact!}";
+englet.parse(o1);
+oo=englet.getStack();
+print(oo);
+Management.start(englet);
+oo=englet.getStack();
+print(oo);

@@ -1,0 +1,30 @@
+/*
+source("adaptbshtest.bsh");
+*/
+import java.util.regex.*;
+import java.math.*;
+Object[] filterByToString(Object[] oo, String regexp, Object[] targetmark){
+//    print(oo);
+    ArrayList l = new ArrayList();Pattern p = Pattern.compile(regexp);
+    for(int i=0;i<oo.length;i++) {
+     var o = oo[i];
+//     print(o.toString());
+  //   print(p.matcher(o.toString()).matches());
+     if(p.matcher(o.toString()).matches()) {l.add(o);}}
+//    print(l);
+    return l.toArray(targetmark);
+}
+ns(){
+times(a,b){return a*b;}
+    Object times1( Object d1,  Object d2) {
+        return bigdec(d1).multiply(bigdec(d2));
+    }
+
+    
+        BigDecimal bigdec( Object o) {
+        return o instanceof BigDecimal ? (BigDecimal) o
+                : o instanceof Double ? new BigDecimal(((Double) o)
+                        .doubleValue()) : new BigDecimal("" + o);
+    }
+ return this.namespace;}   
+ filterByToString((Object[])ns().getMethods() /*this*/, ".*times.*",new bsh.BshMethod[0]);

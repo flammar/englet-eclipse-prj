@@ -1,0 +1,3 @@
+
+a = new am.englet.$(am.englet.Management.class, Method.class);
+a.method(new Class[]{am.englet.link.Link.class, am.englet.CommandSource.class}, new String[]{"excl"});

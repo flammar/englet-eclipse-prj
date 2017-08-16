@@ -1,0 +1,56 @@
+
+import java.io.*;
+import java.lang.reflect.*;
+import bsh.util.*;
+import am.englet.*;
+import am.englet.bsh.*;
+import am.englet.cast.*;
+import am.englet.link.*;
+import am.englet.link.backadapters.*;
+import am.englet.link.backadapters.slider.*;
+import am.englet.reflect.*;
+import am.englet.util.*;
+
+bsh.system.shutdownOnExit = false;
+Map getProperties( Object o) {
+        Hashtable result = new Hashtable();
+        Object[] o0 = new Object[0];
+        Method[] m = o.getClass().getMethods();
+        for (int i = 0; i < m.length; i++) {
+            if (m[i].getParameterTypes().length == 0 && m[i].getName().startsWith( "get")) {
+                try {
+                    result.put( m[i].getName().substring( 3), m[i].invoke( o, o0));
+                } catch (Exception e) {
+                }
+            }
+        }
+        return result;
+    }
+
+    void setProperties( Object o, Map prop) {
+        Object[] o0 = new Object[1];
+        Method[] m = o.getClass().getMethods();
+        for (int i = 0; i < m.length; i++) {
+            if (m[i].getParameterTypes().length == 1 && m[i].getName().startsWith( "set")) {
+                try {
+                    o0[0] = prop.get( m[i].getName().substring( 3));
+                    m[i].invoke( o, o0);
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+    
+    
+show();
+//desktop();
+setNameCompletion(true);
+bsh.cwd=pathToFile( getSourceFileInfo() ).getParent();
+addClassPath(""+bsh.cwd+"\\..\\bin");
+File ff = new File(""+bsh.cwd+"\\..\\lib");
+if(ff.exists()){
+    for(fff:ff.listFiles()){
+        if(fff.getName().indexOf("-src")<0)
+        addClassPath(fff.getCanonicalPath());
+    }
+}

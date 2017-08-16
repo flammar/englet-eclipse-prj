@@ -1,0 +1,13 @@
+/*
+source("immediatetest.bsh");
+*/
+import am.englet.*;
+o="{QwerTY+__-*{sav \\gds bsadvsdfv // /fdaSF}Z 33 int'34.5 perform float XFBGFNB!$!#%^$'qwer sdfg789dsfg \"wert\"\"\\\"Xag\\\"iBlax kin Jexistan\"}";
+englet = new Englet();
+englet.parse(o);
+print(englet.getStack());
+oo=englet.getStack().pop();
+print(oo);
+print("6:"+oo.get(6)+":"+oo.get(6).getClass());
+print("8:"+oo.get(8)+":"+oo.get(8).getClass());
+print("9:"+oo.get(9)+":"+oo.get(9).getClass());

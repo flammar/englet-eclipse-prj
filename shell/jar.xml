@@ -1,0 +1,17 @@
+<project>
+<property name ="fn" value="${basedir}/../../englet.jar"></property>
+<property name ="jbd" value="${basedir}/../../"></property>
+    <target name="main">
+    	<delete file="${fn}"></delete>
+    	<echo message="${fn}" />
+    	<echo message="${jbd}" />
+    	<!-- jar destfile="${fn}" basedir="${jbd}" -->
+       	<jar destfile="${fn}" basedir="${basedir}/..">
+    		<!--fileset dir="${jbd}englet" id="id">
+            </fileset-->
+
+    	</jar>
+		<copy file="${fn}" todir="f:\\" overwrite="true" />
+    </target>
+</project>
+

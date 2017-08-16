@@ -1,0 +1,21 @@
+/*
+source("processingtest.bsh");
+*/
+import am.englet.*;
+o="{OfSampleIndex}v!!i{V! 0 part V! 1 part V! 2 part V! 3 part}t!!i{,'123234345456 of! '45 sample! -1 index!T!"+
+    "-2 index!T! 1 index!T! 2 index!T!Of'34 'aaa 0 replaceOf'34 'a 1 replaceOf'34 'a -1 replace}"
+    +"test!!i";
+englet = new Englet();
+englet.parse("'am.englet.Processing !i adapt_processing_class !i");
+//print(englet.getMethods());
+//print(englet.getRstack());
+print(englet.getStack());
+englet.parse(o);
+print(englet.getStack());
+o1="{Test!}";
+englet.parse(o1);
+oo=englet.getStack();
+print(oo);
+Management.start(englet);
+oo=englet.getStack();
+print(oo);

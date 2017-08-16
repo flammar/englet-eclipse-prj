@@ -1,0 +1,15 @@
+/*
+source("parsertest.bsh");
+*/
+show();
+import am.englet.*;
+f=new StringIteratorFactory();
+o="вып 'вып fsg se vg AB+2@* AsdfGh--a 'wer ' \" сука \" _ff \" \\\"Xag\\\" i XagBlax\" \\\"Xag\\\" i XagBlax";
+i=f.forObject(o);
+print(o);
+while(i.hasNext()) print("i.next()<=+"+i.next()+">");
+o="{QwerTY+__-*{sav \\gds bsadvsdfv // /fdaSF}ZXFBGFNB!$!#%^$}";
+i=f.forObject(o);
+print(o);
+while(i.hasNext()) print("i.next()<=+"+i.next()+">");
+show();

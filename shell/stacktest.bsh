@@ -1,0 +1,18 @@
+st=new am.englet.DataStack();
+st.push("a");
+st.put("a","1");
+st.frame();
+print(st);
+st.push("0");
+st.push("1");
+print(st);
+st.push("0");
+st.push("1");
+st.push("2");
+st.push("3");
+st.frame(Arrays.asList(new Object[]{"a","bb","c"}));
+print(st);
+st.push("23");
+st.deframe();
+print(st);
+
