@@ -13,26 +13,32 @@ import am.englet.link.Link;
 
 public class ProgrammableCandidateConverter implements CandidateConverter, Customizable {
     private String command;
+    private String import_;
     private Link link;
     private final DataStack ds = new DataStack();
-    private ArrayList list;
 
-    public Object convert(final Candidate candidate) {
-        try {
-            final LookupContext initialLookupContext = candidate.getInitialLookupContext();
-            final Englet englet = Utils.deriveEnglet(ds, initialLookupContext.methodsStorage,
-                    initialLookupContext.classPool);
-            final Object run = am.englet.Utils.run(englet, candidate, link != null ? link : (link = getLink(list,
-                    englet)));
-            return run;
-        } catch (final Throwable e) {
-            Utils.debug(null, e, command, "(", link, ") failed");
-            e.printStackTrace();
-        }
-        return null;
+	public Object convert(final Candidate candidate) {
+		try {
+			final LookupContext initialLookupContext = candidate
+					.getInitialLookupContext();
+			if (import_ != null) {
+				initialLookupContext.classPool.importPackages(import_.replaceAll("[^A-Za-z0-9\\._\\$]+", " ")
+						.trim().split(" "));
+				import_ = null;
+			}
+			final Englet englet = Utils.deriveEnglet(ds, initialLookupContext.methodsStorage,
+					initialLookupContext.classPool);
+			final Object run = am.englet.Utils.run(englet, candidate,
+					link != null ? link : (link = getLink(englet)));
+			return run;
+		} catch (final Throwable e) {
+			Utils.debug(null, e, command, "(", link, ") failed");
+			e.printStackTrace();
+		}
+		return null;
     }
 
-    private Link getLink(final ArrayList list, final Englet englet) throws Exception {
+    private Link getLink(final Englet englet) throws Exception {
         Utils.debug(null, "ProgrammableCandidateConverter.getLink():to parse:", command);
         englet.parse(command);
         Utils.debug(null, "ProgrammableCandidateConverter.getLink():parsed:", command);
@@ -49,15 +55,21 @@ public class ProgrammableCandidateConverter implements CandidateConverter, Custo
 
     public void customize(final Properties properties) {
         command = properties.getProperty("command");
-        list = Collections.list(properties.propertyNames());
-        for (final Iterator iterator = list.iterator(); iterator.hasNext();) {
+        for (final Iterator iterator = Collections.list(properties.propertyNames()).iterator(); iterator.hasNext();) {
             final String pname = (String) iterator.next();
             final StackFrame top = ds.top();
             top.put(pname, properties.get(pname));
         }
-    }
+		import_ = (properties.getProperty("import", "") + " "
+				+ properties.getProperty("import_packages", "") + " "
+				+ properties.getProperty("importPackages", "")
+				+ properties.getProperty("import_package", "") + " "
+				+ properties.getProperty("importPackage", "")
+				+ properties.getProperty("import.packages", "") + " " + properties
+				.getProperty("import.package", ""));
+	}
 
-    public String toString() {
-        return super.toString() + " [" + (link != null ? "link=" + link : "command=" + command) + "]";
-    }
+	public String toString() {
+		return super.toString() + " [" + (link != null ? "link=" + link : "command=" + command) + "]";
+	}
 }

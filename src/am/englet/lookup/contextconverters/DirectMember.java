@@ -1,8 +1,12 @@
 package am.englet.lookup.contextconverters;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import am.englet.$;
 import am.englet.ConstructorInvokable;
 import am.englet.FieldGetInvokable;
 import am.englet.FieldSetInvokable;
@@ -37,7 +41,8 @@ public class DirectMember implements CandidateConverter {
         final String name0 = asList.get(lastIndex).toString();
         final boolean isSetter = name0.endsWith("!");
         final String name = isSetter ? name0.substring(0, name0.length() - 1) : name0;
-
+        boolean doGetFirst = Collections.singletonList("").equals(subList);
+        
         if (isSetter)
             try {
                 return new FieldSetInvokable(forName.getField(name));
@@ -51,11 +56,11 @@ public class DirectMember implements CandidateConverter {
                 return classPool.forName(object.toString());
             }
         }).toArray(new Class[0]);
-        if (Arrays.asList(array).contains(null))
+        if ((!doGetFirst) && Arrays.asList(array).contains(null))
             return null;
         if ("new".equals(name))
             try {
-                return new ConstructorInvokable(forName.getConstructor(array));
+                return new ConstructorInvokable(getConstructor(forName, array, doGetFirst));
             } catch (final Exception e) {
                 e.printStackTrace();
             }
@@ -66,11 +71,25 @@ public class DirectMember implements CandidateConverter {
                 e.printStackTrace();
             }
         try {
-            return new MethodInvokable(forName.getMethod(name, array));
+            return new MethodInvokable(getMethod(forName, name, array, doGetFirst));
         } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Method getMethod(Class class0, String name, Class[] array, boolean doGetFirst) throws NoSuchMethodException
+    {
+      if (doGetFirst)
+        return new am.englet.$(class0, Method.class).method(new String[] { name });
+      return class0.getMethod(name, array);
+    }
+    
+    private Constructor getConstructor(Class class0, Class[] array, boolean doGetFirst) throws NoSuchMethodException
+    {
+      if (doGetFirst)
+        return new am.englet.$(class0, Constructor.class).constructor();
+      return class0.getConstructor(array);
     }
 
     public Object describeFail(final LookupContext lookupContext) {

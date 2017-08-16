@@ -833,7 +833,7 @@ public class Utils {
                     private Object getReturnValue(final Map m, final Method method, final Object[] args)
                             throws Throwable {
                         final Object returnValue = m.get(method);
-                        if (returnValue.getClass().equals(Method.class))
+                        if (returnValue != null && Method.class.equals(returnValue.getClass()))
                             return ((Method) returnValue).invoke(this, args);
                         else if (returnValue instanceof Invokable)
                             return ((Invokable) returnValue).invoke(this, args);
